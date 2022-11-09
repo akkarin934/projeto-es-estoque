@@ -39,9 +39,32 @@ def funcao_principal():
     cursor.execute(comando_SQL,dados)
     banco.commit()
 
+    formulario.lineEdit.setText("") # limpa o escrito após enviar
+    formulario.lineEdit_2.setText("")
+    formulario.lineEdit_3.setText("")
+
+def chama_segunda_tela():
+    segunda_tela.show()
+
+    cursor = banco.cursor()
+    comando_SQL = "SELECT * FROM produtos"
+    cursor.execute(comando_SQL)
+    dados_lidos = cursor.fetchall() 
+
+    segunda_tela.tableWidget.setRowCount(len(dados_lidos)) #linhas da tabela
+    segunda_tela.tableWidget.setColumnCount(5) # número colunas da tabela é fixo 
+
+    for i in range(0, len(dados_lidos)):
+        for j in range(0, 5):
+            segunda_tela.tableWidget.setItem(i, j,QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
+
+
+
 app=QtWidgets.QApplication([])
 formulario=uic.loadUi("formulario.ui") # carrega o arquivo de interface feito no Qt
+segunda_tela=uic.loadUi("listar_produtos.ui") # carregando a tela de listagem
 formulario.pushButton.clicked.connect(funcao_principal)
+formulario.pushButton_2.clicked.connect(chama_segunda_tela)
 
-formulario.show()
+formulario.show() 
 app.exec()
