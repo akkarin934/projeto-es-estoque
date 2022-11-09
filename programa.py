@@ -1,8 +1,17 @@
-# importando módulo uic para ler o arquivo UI e QtWidgets para montar os elementos
-from PyQt5 import uic,QtWidgets
+
+from PyQt5 import uic,QtWidgets # importando módulo uic para ler o arquivo UI e QtWidgets para montar os elementos
+import mysql.connector # módulo do python que conecta com o mysql
+
+# fazendo a conexão python com o mysql 
+banco = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    passwd="",
+    database="cadastro_produtos"
+)
 
 def funcao_principal():
-    
+
     linha1 = formulario.lineEdit.text() # lê o que foi digitado
     linha2 = formulario.lineEdit_2.text()
     linha3 = formulario.lineEdit_3.text()
@@ -22,6 +31,13 @@ def funcao_principal():
     print("Código:", linha1) # o que foi digitado no "código" na interface gráfica, é recuperado na linha 1, e assim por diante
     print("Nome:", linha2)
     print("Preço:", linha3)
+
+    # insere no banco os dados digitados pelo usuário
+    cursor = banco.cursor()
+    comando_SQL = "INSERT INTO produtos (codigo,nome,preco,categoria) VALUES (%s,%s,%s,%s)"
+    dados = (str(linha1),str(linha2),str(linha3),categoria)
+    cursor.execute(comando_SQL,dados)
+    banco.commit()
 
 app=QtWidgets.QApplication([])
 formulario=uic.loadUi("formulario.ui") # carrega o arquivo de interface feito no Qt
