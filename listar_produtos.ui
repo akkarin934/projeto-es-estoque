@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>639</width>
-    <height>543</height>
+    <height>583</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -121,6 +121,30 @@
       </font>
      </property>
     </column>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>510</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(238, 238, 238);
+</string>
+    </property>
+    <property name="text">
+     <string>Excluir</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

@@ -58,13 +58,23 @@ def chama_segunda_tela():
         for j in range(0, 5):
             segunda_tela.tableWidget.setItem(i, j,QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
 
+def excluir_dados():
+    linha = segunda_tela.tableWidget.currentRow()
+    segunda_tela.tableWidget.removeRow(linha)
 
+    cursor = banco.cursor()
+    cursor.execute("SELECT id FROM produtos")
+    dados_lidos = cursor.fetchall()
+    valor_id = dados_lidos[linha][0]
+    cursor.execute("DELETE FROM produtos WHERE id=" + str(valor_id))
 
 app=QtWidgets.QApplication([])
 formulario=uic.loadUi("formulario.ui") # carrega o arquivo de interface feito no Qt
 segunda_tela=uic.loadUi("listar_produtos.ui") # carregando a tela de listagem
 formulario.pushButton.clicked.connect(funcao_principal)
 formulario.pushButton_2.clicked.connect(chama_segunda_tela)
+segunda_tela.pushButton.clicked.connect(excluir_dados)
+
 
 formulario.show() 
 app.exec()
