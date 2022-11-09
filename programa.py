@@ -68,13 +68,55 @@ def excluir_dados():
     valor_id = dados_lidos[linha][0]
     cursor.execute("DELETE FROM produtos WHERE id=" + str(valor_id))
 
+
+numero_id = 0
+
+def editar_dados():
+    global numero_id
+    linha = segunda_tela.tableWidget.currentRow()
+
+    cursor = banco.cursor()
+    cursor.execute("SELECT id FROM produtos")
+    dados_lidos = cursor.fetchall()
+    valor_id = dados_lidos[linha][0]
+    cursor.execute("SELECT * FROM produtos WHERE id="+ str(valor_id))
+    produto = cursor.fetchall()
+    tela_editar.show()
+    
+    numero_id = valor_id
+
+    tela_editar.lineEdit.setText(str(produto[0][0]))
+    tela_editar.lineEdit_2.setText(str(produto[0][1]))
+    tela_editar.lineEdit_3.setText(str(produto[0][2]))
+    tela_editar.lineEdit_4.setText(str(produto[0][3]))
+    tela_editar.lineEdit_5.setText(str(produto[0][4]))
+
+
+def salvar_editados():
+    # pega o número do id
+    global numero_id
+    # pega o valor digitado no lineEdit (as caixas aonde o usuário digita os valores)
+    codigo = tela_editar.lineEdit_2.text() # método .text() lê o que foi passado
+    nome = tela_editar.lineEdit_3.text()
+    preco = tela_editar.lineEdit_4.text()
+    categoria = tela_editar.lineEdit_5.text()
+    # atualizar no banco os dados que foram editados 
+    cursor = banco.cursor()
+    cursor.execute("UPDATE produtos SET codigo = '{}', nome = '{}', preco = '{}', categoria = '{}' WHERE id ={}".format(codigo,nome,preco,categoria,numero_id))
+    # atualiza na tela
+    tela_editar.close()
+    segunda_tela.close()
+    chama_segunda_tela()
+
 app=QtWidgets.QApplication([])
 formulario=uic.loadUi("formulario.ui") # carrega o arquivo de interface feito no Qt
 segunda_tela=uic.loadUi("listar_produtos.ui") # carregando a tela de listagem
+tela_editar=uic.loadUi("tela_editar.ui")
 formulario.pushButton.clicked.connect(funcao_principal)
-formulario.pushButton_2.clicked.connect(chama_segunda_tela)
+formulario.pushButton_3.clicked.connect(chama_segunda_tela)
 segunda_tela.pushButton.clicked.connect(excluir_dados)
-
+segunda_tela.pushButton_2.clicked.connect(editar_dados)
+tela_editar.pushButton.clicked.connect(salvar_editados)
 
 formulario.show() 
 app.exec()

@@ -224,10 +224,10 @@
      <string>Enviar</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>440</y>
       <width>71</width>
       <height>31</height>
@@ -241,8 +241,7 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(238, 238, 238);
-</string>
+     <string notr="true">background-color: rgb(238, 238, 238);</string>
     </property>
     <property name="text">
      <string>Listar</string>
